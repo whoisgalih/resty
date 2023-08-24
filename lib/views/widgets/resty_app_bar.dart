@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+
+class RestyAppBar extends StatelessWidget {
+  const RestyAppBar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      pinned: true,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      elevation: 0,
+      collapsedHeight: 70,
+      expandedHeight: 200,
+      flexibleSpace: FlexibleSpaceBar(
+        titlePadding: const EdgeInsets.all(20),
+        centerTitle: false,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Resty',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 4),
+            Text("Recommended restaurant for you",
+                style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
+        background: Image.asset(
+          'assets/images/gradient_background.png',
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
