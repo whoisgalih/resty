@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resty/models/restautrant_model.dart';
 import 'package:resty/themes/colors.dart';
-import 'package:resty/views/resturant_page.dart';
+import 'package:resty/views/restaurant_page.dart';
 
 class ListViewItem extends StatelessWidget {
   const ListViewItem({

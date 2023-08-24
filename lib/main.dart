@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:resty/models/restautrant_model.dart';
 import 'package:resty/themes/colors.dart';
-import 'package:resty/views/home_page.dart';
-import 'package:resty/views/resturant_page.dart';
+import 'package:resty/views/restaurant_list_page.dart';
+import 'package:resty/views/restaurant_page.dart';
 
 void main() {
   runApp(const MainApp());

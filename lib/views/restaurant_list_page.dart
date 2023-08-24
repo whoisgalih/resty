@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resty/models/restaurant_list.dart';
+import 'package:resty/themes/colors.dart';
 import 'package:resty/views/widgets/list_view_item.dart';
 import 'package:resty/views/widgets/persistent_header.dart';
 import 'package:resty/views/widgets/resty_app_bar.dart';
@@ -80,23 +81,70 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
           removeTop: true,
           context: context,
           child: loadState == LoadState.success
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: restaurants.filteredRestaurants.length,
-                  itemBuilder: (context, index) {
-                    final restaurant = restaurants.filteredRestaurants[index];
-                    return ListViewItem(restaurant: restaurant);
-                  },
-                )
+              ? restaurants.filteredRestaurants.isNotEmpty
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: restaurants.filteredRestaurants.length,
+                      itemBuilder: (context, index) {
+                        final restaurant =
+                            restaurants.filteredRestaurants[index];
+                        return ListViewItem(restaurant: restaurant);
+                      },
+                    )
+                  : _displayError(
+                      icon: Icons.search_off,
+                      text: RichText(
+                        text: TextSpan(
+                          text: searchController.text,
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                          children: [
+                            TextSpan(
+                              text: " not found in restaurants list",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
               : loadState == LoadState.error
-                  ? const Center(
-                      child: Text("Error loading data"),
+                  ? _displayError(
+                      icon: Icons.error_outline,
+                      text: Text(
+                        "Oops, something went wrong",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     )
                   : const Center(
                       child: CircularProgressIndicator(),
                     ),
         ),
       ),
+    );
+  }
+
+  Column _displayError({
+    required IconData icon,
+    required Widget text,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          size: 100,
+          color: primaryColor[300],
+        ),
+        const SizedBox(height: 24),
+        text,
+      ],
     );
   }
 
