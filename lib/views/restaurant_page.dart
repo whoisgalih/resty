@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resty/models/restautrant_model.dart';
+import 'package:resty/models/restaurant_model.dart';
 import 'package:resty/themes/colors.dart';
 
 class RestaurantPage extends StatefulWidget {

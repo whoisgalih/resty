@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resty/models/restautrant_model.dart';
+import 'package:resty/models/restaurant_model.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/restaurant_page.dart';
 
@@ -84,13 +84,13 @@ class ListViewItem extends StatelessWidget {
                             color: accentColor,
                           ),
                           const SizedBox(width: 4),
-                          Text(restaurant.rating.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                    color: accentColor[700],
-                                  )),
+                          Text(
+                            restaurant.rating.toString(),
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: accentColor[700],
+                                    ),
+                          ),
                         ],
                       ),
                     ],

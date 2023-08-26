@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:resty/models/restautrant_model.dart';
+import 'package:resty/models/restaurant_model.dart';
 
 class Restaurants {
   // constants
