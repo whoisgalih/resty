@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:resty/models/drink_model.dart';
-import 'package:resty/models/food_model.dart';
+import 'package:resty/data/models/drink_model.dart';
+import 'package:resty/data/models/food_model.dart';
 
 class Menus {
   List<Food> foods;

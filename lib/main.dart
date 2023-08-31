@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:resty/models/restaurant_model.dart';
+import 'package:provider/provider.dart';
+import 'package:resty/data/api/api_service.dart';
+import 'package:resty/data/models/restaurant_model.dart';
+import 'package:resty/provider/restaurants_provider.dart';
 import 'package:resty/themes/colors.dart';
-import 'package:resty/views/restaurant_list_page.dart';
-import 'package:resty/views/restaurant_page.dart';
+import 'package:resty/views/ui/restaurant_list_page.dart';
+import 'package:resty/views/ui/restaurant_page.dart';
 
 void main() {
   runApp(const MainApp());
 }
+
+final ApiService apiService = ApiService();
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -26,11 +31,16 @@ class MainApp extends StatelessWidget {
       ),
       initialRoute: RestaurantListPage.routeName,
       routes: {
-        RestaurantListPage.routeName: (context) => const RestaurantListPage(),
-        RestaurantPage.routeName: (context) => RestaurantPage(
-              restaurant:
-                  ModalRoute.of(context)!.settings.arguments as Restaurant,
+        RestaurantListPage.routeName: (context) => ChangeNotifierProvider(
+              create: (_) => RestaurantsProvider(
+                apiService: apiService,
+              ),
+              child: const RestaurantListPage(),
             ),
+        // RestaurantPage.routeName: (context) => RestaurantPage(
+        //       restaurant:
+        //           ModalRoute.of(context)!.settings.arguments as Restaurant,
+        //     ),
       },
     );
   }
