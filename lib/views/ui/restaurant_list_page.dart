@@ -61,7 +61,8 @@ class RestaurantListPage extends StatelessWidget {
       return _displayError(
         icon: Icons.error_outline,
         text: Text(
-          "Oops, something went wrong\nFailed to load restaurants",
+          // "Oops, something went wrong\nFailed to load restaurants",
+          state.message,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium,
         ),

@@ -9,6 +9,7 @@ import 'package:resty/views/ui/restaurant_list_page.dart';
 import 'package:resty/views/ui/restaurant_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 

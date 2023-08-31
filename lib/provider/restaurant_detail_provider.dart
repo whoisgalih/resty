@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/widgets.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
@@ -28,19 +30,18 @@ class RestaurantProvider extends ChangeNotifier {
       _state = ResultState.loading;
       notifyListeners();
       final restaurantResult = await apiService.getRestaurant(restaurant.id);
-      if (restaurantResult.restaurant.id.isEmpty) {
-        _state = ResultState.noData;
-        notifyListeners();
-        return _message = 'No data';
-      } else {
-        _state = ResultState.hasData;
-        notifyListeners();
-        return _restaurant = restaurantResult;
-      }
+
+      _state = ResultState.hasData;
+      notifyListeners();
+      return _restaurant = restaurantResult;
+    } on SocketException catch (_) {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'No Internet Connection';
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Oops! Something went wrong';
     }
   }
 }

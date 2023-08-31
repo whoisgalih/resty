@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
@@ -83,10 +85,15 @@ class RestaurantsProvider extends ChangeNotifier {
         _getAllCity();
         return _restaurants;
       }
-    } catch (e) {
+    } on SocketException catch (_) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'No Internet Connection';
+    } catch (e) {
+      print(e);
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Oops! Something went wrong';
     }
   }
 
@@ -108,10 +115,14 @@ class RestaurantsProvider extends ChangeNotifier {
         _getAllCity();
         return _restaurants;
       }
+    } on SocketException catch (_) {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'No Internet Connection';
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Oops! Something went wrong';
     }
   }
 
