@@ -1,4 +1,4 @@
-import 'package:resty/data/models/restaurant_detail_model.dart';
+import 'package:resty/data/models/restaurant_detail/restaurant_detail_model.dart';
 
 class RestaurantDetailResult {
   bool error;

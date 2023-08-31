@@ -1,6 +1,6 @@
-import 'package:resty/data/models/cutomer_review_model.dart';
-import 'package:resty/data/models/menus_model.dart';
-import 'package:resty/data/models/category_model.dart';
+import 'package:resty/data/models/restaurant_detail/cutomer_review_model.dart';
+import 'package:resty/data/models/restaurant_detail/menus_model.dart';
+import 'package:resty/data/models/restaurant_detail/category_model.dart';
 
 class RestaurantDetail {
   String id;

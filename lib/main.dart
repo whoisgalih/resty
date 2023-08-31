@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/data/api/api_service.dart';
-import 'package:resty/data/models/restaurant_model.dart';
+import 'package:resty/data/models/restaurants/restaurant_model.dart';
 import 'package:resty/provider/restaurant_detail_provider.dart';
 import 'package:resty/provider/restaurants_provider.dart';
 import 'package:resty/themes/colors.dart';
@@ -29,6 +29,9 @@ class MainApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: primaryColor[50],
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: accentColor,
+        ),
       ),
       initialRoute: RestaurantListPage.routeName,
       routes: {

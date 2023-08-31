@@ -1,5 +1,5 @@
-import 'package:resty/data/models/drink_model.dart';
-import 'package:resty/data/models/food_model.dart';
+import 'package:resty/data/models/restaurant_detail/drink_model.dart';
+import 'package:resty/data/models/restaurant_detail/food_model.dart';
 
 class Menus {
   List<Food> foods;

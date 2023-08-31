@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
-import 'package:resty/data/models/restaurant_detail_result_model.dart';
-import 'package:resty/data/models/restaurant_model.dart';
+import 'package:resty/data/models/restaurant_detail/restaurant_detail_result_model.dart';
+import 'package:resty/data/models/restaurants/restaurant_model.dart';
 
 class RestaurantProvider extends ChangeNotifier {
   final ApiService apiService;
