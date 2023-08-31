@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/data/api/api_service.dart';
 import 'package:resty/data/models/restaurant_model.dart';
+import 'package:resty/provider/restaurant_detail_provider.dart';
 import 'package:resty/provider/restaurants_provider.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/ui/restaurant_list_page.dart';
@@ -37,10 +38,14 @@ class MainApp extends StatelessWidget {
               ),
               child: const RestaurantListPage(),
             ),
-        // RestaurantPage.routeName: (context) => RestaurantPage(
-        //       restaurant:
-        //           ModalRoute.of(context)!.settings.arguments as Restaurant,
-        //     ),
+        RestaurantPage.routeName: (context) => ChangeNotifierProvider(
+              create: (_) => RestaurantProvider(
+                apiService: apiService,
+                restaurant:
+                    ModalRoute.of(context)?.settings.arguments as Restaurant,
+              ),
+              child: const RestaurantPage(),
+            ),
       },
     );
   }

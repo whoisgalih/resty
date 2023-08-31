@@ -16,11 +16,11 @@ class ListViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.pushNamed(
-        //   context,
-        //   RestaurantPage.routeName,
-        //   arguments: restaurant,
-        // );
+        Navigator.pushNamed(
+          context,
+          RestaurantPage.routeName,
+          arguments: restaurant,
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
@@ -32,7 +32,7 @@ class ListViewItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    "${ApiService.baseUrl}/images/small/${restaurant.pictureId}",
+                    "${ApiService.baseUrl}/images/large/${restaurant.pictureId}",
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,

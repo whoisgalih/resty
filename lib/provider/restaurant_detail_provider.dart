@@ -1,42 +1,41 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
-import 'package:resty/data/models/restaurants_result_model.dart';
+import 'package:resty/data/models/restaurant_detail_result_model.dart';
+import 'package:resty/data/models/restaurant_model.dart';
 
-class RestaurantsProvider extends ChangeNotifier {
+class RestaurantProvider extends ChangeNotifier {
   final ApiService apiService;
+  final Restaurant restaurant;
 
-  RestaurantsProvider({
+  RestaurantProvider({
     required this.apiService,
+    required this.restaurant,
   }) {
-    _fetchAllRestaurants();
+    _fetchRestaurant();
   }
 
-  late ScrollController _scrollController;
-  bool _isExpanded = true;
-  bool _isTextExpanded = false;
-
-  late RestaurantsResult _restaurantsResult;
+  late RestaurantDetailResult _restaurant;
   late ResultState _state;
   String _message = '';
 
   String get message => _message;
-  RestaurantsResult get result => _restaurantsResult;
+  RestaurantDetailResult get result => _restaurant;
   ResultState get state => _state;
 
-  Future<dynamic> _fetchAllRestaurants() async {
+  Future<dynamic> _fetchRestaurant() async {
     try {
       _state = ResultState.loading;
       notifyListeners();
-      final restaurants = await apiService.getRestaurants();
-      if (restaurants.restaurants.isEmpty) {
+      final restaurantResult = await apiService.getRestaurant(restaurant.id);
+      if (restaurantResult.restaurant.id.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
         return _message = 'No data';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
-        return _restaurantsResult = restaurants;
+        return _restaurant = restaurantResult;
       }
     } catch (e) {
       _state = ResultState.error;
