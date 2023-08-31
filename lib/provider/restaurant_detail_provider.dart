@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
+import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
 import 'package:resty/data/models/restaurant_detail/restaurant_detail_result_model.dart';
 import 'package:resty/data/models/restaurants/restaurant_model.dart';
 
@@ -43,5 +44,11 @@ class RestaurantProvider extends ChangeNotifier {
       notifyListeners();
       return _message = 'Oops! Something went wrong';
     }
+  }
+
+  // set reviews
+  void setReviews(List<CustomerReview> reviews) {
+    _restaurant.restaurant.customerReviews = reviews;
+    notifyListeners();
   }
 }

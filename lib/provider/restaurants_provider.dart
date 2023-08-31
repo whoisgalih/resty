@@ -90,7 +90,6 @@ class RestaurantsProvider extends ChangeNotifier {
       notifyListeners();
       return _message = 'No Internet Connection';
     } catch (e) {
-      print(e);
       _state = ResultState.error;
       notifyListeners();
       return _message = 'Oops! Something went wrong';

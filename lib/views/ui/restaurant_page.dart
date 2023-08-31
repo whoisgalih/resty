@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
+import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
 import 'package:resty/provider/restaurant_detail_provider.dart';
 import 'package:resty/themes/colors.dart';
+import 'package:resty/views/ui/add_review_page.dart';
 
 class RestaurantPage extends StatefulWidget {
   final double expandedHeight;
@@ -163,7 +165,53 @@ class _RestaurantPageState extends State<RestaurantPage> {
                       ),
                     )
                     .toList(),
-              )
+              ),
+              Divider(
+                height: 33,
+                thickness: 1,
+                color: primaryColor[200],
+              ),
+              _heading("Reviews"),
+              Column(
+                children: state.result.restaurant.customerReviews
+                    .map(
+                      (review) => Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        margin: const EdgeInsets.only(bottom: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              review.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              review.review,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              review.date.toUpperCase(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .copyWith(color: primaryColor[400]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
             ],
           ),
         ),
@@ -184,6 +232,23 @@ class _RestaurantPageState extends State<RestaurantPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            AddReviewPage.routeName,
+            arguments: Provider.of<RestaurantProvider>(context, listen: false)
+                .restaurant
+                .id,
+          ).then((result) {
+            if (result is List<CustomerReview>) {
+              Provider.of<RestaurantProvider>(context, listen: false)
+                  .setReviews(result);
+            }
+          });
+        },
+        child: const Icon(Icons.chat_rounded),
+      ),
       body: Consumer<RestaurantProvider>(
         builder: (BuildContext context, RestaurantProvider state, _) {
           return NestedScrollView(
@@ -234,7 +299,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                       ],
                     ),
                   ),
-                )
+                ),
               ];
             },
             body: MediaQuery.removePadding(

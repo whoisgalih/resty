@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/data/api/api_service.dart';
 import 'package:resty/data/models/restaurants/restaurant_model.dart';
+import 'package:resty/provider/add_review_provider.dart';
 import 'package:resty/provider/restaurant_detail_provider.dart';
 import 'package:resty/provider/restaurants_provider.dart';
 import 'package:resty/themes/colors.dart';
+import 'package:resty/views/ui/add_review_page.dart';
 import 'package:resty/views/ui/restaurant_list_page.dart';
 import 'package:resty/views/ui/restaurant_page.dart';
 
@@ -30,8 +32,15 @@ class MainApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: primaryColor[50],
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        progressIndicatorTheme: ProgressIndicatorThemeData(
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: accentColor,
+        ),
+        appBarTheme: const AppBarTheme(elevation: 0),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: primaryColor[300],
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          elevation: 0,
         ),
       ),
       initialRoute: RestaurantListPage.routeName,
@@ -49,6 +58,14 @@ class MainApp extends StatelessWidget {
                     ModalRoute.of(context)?.settings.arguments as Restaurant,
               ),
               child: const RestaurantPage(),
+            ),
+        AddReviewPage.routeName: (context) => ChangeNotifierProvider(
+              create: (_) => AddReviewProvider(
+                apiService: apiService,
+                restaurantId:
+                    ModalRoute.of(context)?.settings.arguments as String,
+              ),
+              builder: (context, _) => const AddReviewPage(),
             ),
       },
     );

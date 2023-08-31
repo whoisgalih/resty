@@ -1,4 +1,4 @@
-import 'package:resty/data/models/restaurant_detail/cutomer_review_model.dart';
+import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
 import 'package:resty/data/models/restaurant_detail/menus_model.dart';
 import 'package:resty/data/models/restaurant_detail/category_model.dart';
 

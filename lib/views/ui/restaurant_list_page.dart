@@ -61,7 +61,6 @@ class RestaurantListPage extends StatelessWidget {
       return _displayError(
         icon: Icons.error_outline,
         text: Text(
-          // "Oops, something went wrong\nFailed to load restaurants",
           state.message,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium,
@@ -89,7 +88,7 @@ class RestaurantListPage extends StatelessWidget {
                     : const SliverToBoxAdapter(child: SizedBox()),
                 state.state == ResultState.hasData ||
                         (state.isSearching && state.state != ResultState.error)
-                    ? FilterBar()
+                    ? const FilterBar()
                     : const SliverToBoxAdapter(child: SizedBox()),
               ];
             },
