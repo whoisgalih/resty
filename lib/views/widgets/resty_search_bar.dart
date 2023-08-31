@@ -28,7 +28,7 @@ class RestySearchBar extends StatelessWidget {
                 builder: (BuildContext context, RestaurantsProvider state, _) {
                   return TextField(
                     controller: state.searchController,
-                    onSubmitted: (_) {
+                    onSubmitted: (value) {
                       state.runFilter();
                     },
                     decoration: InputDecoration(
@@ -44,8 +44,10 @@ class RestySearchBar extends StatelessWidget {
                       suffixIcon: InkWell(
                         borderRadius: BorderRadius.circular(100),
                         onTap: () {
-                          state.searchController.clear();
-                          state.runFilter();
+                          if (state.searchController.text.isNotEmpty) {
+                            state.searchController.clear();
+                            state.runFilter();
+                          }
                         },
                         child: Icon(
                           Icons.clear,

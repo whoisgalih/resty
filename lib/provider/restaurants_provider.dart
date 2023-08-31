@@ -100,7 +100,7 @@ class RestaurantsProvider extends ChangeNotifier {
       if (restaurants.restaurants.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
-        return _message = 'No data';
+        return _message = query;
       } else {
         _state = ResultState.hasData;
         _restaurants = restaurants.restaurants;
@@ -117,40 +117,45 @@ class RestaurantsProvider extends ChangeNotifier {
 
   dynamic runFilter() async {
     await _searchRestaurants(searchController.text);
-    _state = ResultState.loading;
-    notifyListeners();
 
-    // filter city
-    if (selectedCity != defaultCity) {
-      _restaurants = _restaurants
-          .where((restaurant) => restaurant.city == selectedCity)
-          .toList();
-    }
-
-    // filter rating
-    if (selectedRating != defaultRating) {
-      _restaurants = _restaurants
-          .where((restaurant) =>
-              restaurant.rating >= selectedRating &&
-              restaurant.rating < selectedRating + 1)
-          .toList();
-    }
-
-    // return result
-    if (_restaurants.isEmpty) {
-      _state = ResultState.noData;
+    if (_state == ResultState.hasData) {
+      _state = ResultState.loading;
       notifyListeners();
-      return _message = 'No data';
-    } else {
-      _state = ResultState.hasData;
-      notifyListeners();
-      return _restaurants;
+
+      // filter city
+      if (selectedCity != defaultCity) {
+        _restaurants = _restaurants
+            .where((restaurant) => restaurant.city == selectedCity)
+            .toList();
+      }
+
+      // filter rating
+      if (selectedRating != defaultRating) {
+        _restaurants = _restaurants
+            .where((restaurant) =>
+                restaurant.rating >= selectedRating &&
+                restaurant.rating < selectedRating + 1)
+            .toList();
+      }
+
+      // return result
+      if (_restaurants.isEmpty) {
+        _state = ResultState.noData;
+        notifyListeners();
+        return _message = searchController.text;
+      } else {
+        _state = ResultState.hasData;
+        notifyListeners();
+        return _restaurants;
+      }
     }
   }
 
   void resetFilter() {
-    selectedCity = defaultCity;
-    selectedRating = defaultRating;
-    runFilter();
+    if (selectedCity != defaultCity || selectedRating != defaultRating) {
+      selectedCity = defaultCity;
+      selectedRating = defaultRating;
+      runFilter();
+    }
   }
 }
