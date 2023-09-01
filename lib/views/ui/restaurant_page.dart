@@ -3,48 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
 import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
-import 'package:resty/provider/restaurant_detail_provider.dart';
+import 'package:resty/provider/restaurant_provider.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/ui/add_review_page.dart';
 
-class RestaurantPage extends StatefulWidget {
-  final double expandedHeight;
-
+class RestaurantPage extends StatelessWidget {
   static String routeName = '/restaurant_page';
 
   const RestaurantPage({
     super.key,
-    this.expandedHeight = 300,
   });
-
-  @override
-  State<RestaurantPage> createState() => _RestaurantPageState();
-}
-
-class _RestaurantPageState extends State<RestaurantPage> {
-  late ScrollController _scrollController;
-  bool _isExpanded = true;
-  bool _isTextExpanded = false;
-
-  void _isExpandedFunction() {
-    setState(() {
-      _isExpanded = _scrollController.hasClients &&
-          _scrollController.offset < (widget.expandedHeight - kToolbarHeight);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()..addListener(_isExpandedFunction);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_isExpandedFunction);
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   Widget _buildDetail(BuildContext context, RestaurantProvider state) {
     if (state.state == ResultState.loading) {
@@ -58,12 +26,10 @@ class _RestaurantPageState extends State<RestaurantPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _heading("About"),
+              _heading(context, "About"),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _isTextExpanded = !_isTextExpanded;
-                  });
+                  state.isTextExpanded = !state.isTextExpanded;
                 },
                 child: Text(
                   state.result.restaurant.description,
@@ -71,8 +37,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: primaryColor[400]),
-                  maxLines: _isTextExpanded ? null : 5,
-                  overflow: _isTextExpanded ? null : TextOverflow.ellipsis,
+                  maxLines: state.isTextExpanded ? null : 5,
+                  overflow: state.isTextExpanded ? null : TextOverflow.ellipsis,
                 ),
               ),
               Divider(
@@ -126,8 +92,9 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 thickness: 1,
                 color: primaryColor[200],
               ),
-              _heading("Menu"),
+              _heading(context, "Menu"),
               _heading(
+                context,
                 "Food",
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.w500,
@@ -147,6 +114,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                     .toList(),
               ),
               _heading(
+                context,
                 "Drinks",
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.w500,
@@ -171,7 +139,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 thickness: 1,
                 color: primaryColor[200],
               ),
-              _heading("Reviews"),
+              _heading(context, "Reviews"),
               Column(
                 children: state.result.restaurant.customerReviews
                     .map(
@@ -252,13 +220,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
       body: Consumer<RestaurantProvider>(
         builder: (BuildContext context, RestaurantProvider state, _) {
           return NestedScrollView(
-            controller: _scrollController,
+            controller: state.scrollController,
             headerSliverBuilder: (context, isScrolled) {
               return [
                 SliverAppBar(
-                  expandedHeight: widget.expandedHeight,
+                  expandedHeight: 300,
                   pinned: true,
-                  foregroundColor: _isExpanded
+                  foregroundColor: state.isExpanded
                       ? Colors.white
                       : Theme.of(context).colorScheme.onPrimary,
                   backgroundColor: Theme.of(context).colorScheme.primary,
@@ -268,7 +236,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                     title: Text(
                       state.restaurant.name,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: _isExpanded
+                            color: state.isExpanded
                                 ? Colors.white
                                 : Theme.of(context).colorScheme.onPrimary,
                             fontWeight: FontWeight.bold,
@@ -312,7 +280,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
     );
   }
 
-  Padding _heading(String text,
+  Padding _heading(BuildContext context, String text,
       {TextStyle? style, double? bottom, double? top}) {
     return Padding(
       padding: EdgeInsets.only(bottom: bottom ?? 16, top: top ?? 0),

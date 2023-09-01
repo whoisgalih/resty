@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
 import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
@@ -16,8 +16,27 @@ class RestaurantProvider extends ChangeNotifier {
     required this.restaurant,
   }) {
     _fetchRestaurant();
+    scrollController = ScrollController()..addListener(_isExpandedFunction);
   }
 
+  late ScrollController scrollController;
+  bool isExpanded = true;
+  bool isTextExpanded = false;
+
+  void _isExpandedFunction() {
+    isExpanded = scrollController.hasClients &&
+        scrollController.offset < (300 - kToolbarHeight);
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(_isExpandedFunction);
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  // data
   late RestaurantDetailResult _restaurant;
   late ResultState _state;
   String _message = '';

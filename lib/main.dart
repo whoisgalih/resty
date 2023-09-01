@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:resty/data/api/api_service.dart';
 import 'package:resty/data/models/restaurants/restaurant_model.dart';
 import 'package:resty/provider/add_review_provider.dart';
-import 'package:resty/provider/restaurant_detail_provider.dart';
+import 'package:resty/provider/restaurant_provider.dart';
 import 'package:resty/provider/restaurants_provider.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/ui/add_review_page.dart';
