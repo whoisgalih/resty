@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:resty/models/restaurant_model.dart';
+import 'package:resty/data/api/api_service.dart';
+import 'package:resty/data/models/restaurants/restaurant_model.dart';
 import 'package:resty/themes/colors.dart';
-import 'package:resty/views/restaurant_page.dart';
+import 'package:resty/views/ui/restaurant_page.dart';
 
 class ListViewItem extends StatelessWidget {
   const ListViewItem({
@@ -31,7 +32,7 @@ class ListViewItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    restaurant.pictureId,
+                    "${ApiService.baseUrl}/images/large/${restaurant.pictureId}",
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,

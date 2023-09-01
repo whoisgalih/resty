@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resty/provider/restaurants_provider.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/widgets/persistent_header.dart';
 
 class RestySearchBar extends StatelessWidget {
-  final TextEditingController searchController;
-  final Function(String) onChanged;
-
-  const RestySearchBar(
-      {super.key, required this.searchController, required this.onChanged});
+  const RestySearchBar({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,38 +24,46 @@ class RestySearchBar extends StatelessWidget {
             ),
             child: Material(
               color: Colors.white,
-              child: TextField(
-                controller: searchController,
-                onChanged: onChanged,
-                decoration: InputDecoration(
-                  hintText: 'Search restaurant',
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: primaryColor[400]),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: primaryColor[800],
-                  ),
-                  suffixIcon: InkWell(
-                    borderRadius: BorderRadius.circular(100),
-                    onTap: () {
-                      searchController.clear();
-                      onChanged('');
+              child: Consumer<RestaurantsProvider>(
+                builder: (BuildContext context, RestaurantsProvider state, _) {
+                  return TextField(
+                    controller: state.searchController,
+                    onSubmitted: (value) {
+                      state.runFilter();
                     },
-                    child: Icon(
-                      Icons.clear,
-                      color: primaryColor[800],
+                    decoration: InputDecoration(
+                      hintText: 'Search restaurant',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: primaryColor[400]),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: primaryColor[800],
+                      ),
+                      suffixIcon: InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () {
+                          if (state.searchController.text.isNotEmpty) {
+                            state.searchController.clear();
+                            state.runFilter();
+                          }
+                        },
+                        child: Icon(
+                          Icons.clear,
+                          color: primaryColor[800],
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
                     ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                ),
+                  );
+                },
               ),
             ),
           ),
