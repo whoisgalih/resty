@@ -6,7 +6,6 @@ import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
 import 'package:resty/provider/restaurant_provider.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/ui/add_review_page.dart';
-import 'package:resty/views/ui/restaurant_list_page.dart';
 import 'package:resty/views/widgets/display_error.dart';
 
 class RestaurantPage extends StatelessWidget {
