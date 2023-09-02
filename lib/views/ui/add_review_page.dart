@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/commons/result_state.dart';
@@ -54,29 +52,31 @@ class AddReviewPage extends StatelessWidget {
                   ),
                   icon: const Icon(Icons.add),
                 ),
-          body: Container(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: state.formKey,
-              child: Column(
-                children: [
-                  _textField(
-                    label: "Name",
-                    hint: "Name",
-                    context: context,
-                    controller: state.nameController,
-                    validator: state.nameValidator,
-                  ),
-                  const SizedBox(height: 16),
-                  _textField(
-                    label: "Review",
-                    hint: "Write down your review here",
-                    context: context,
-                    controller: state.reviewController,
-                    numberOfLines: 10,
-                    validator: state.reviewValidator,
-                  ),
-                ],
+          body: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: state.formKey,
+                child: Column(
+                  children: [
+                    _textField(
+                      label: "Name",
+                      hint: "Name",
+                      context: context,
+                      controller: state.nameController,
+                      validator: state.nameValidator,
+                    ),
+                    const SizedBox(height: 16),
+                    _textField(
+                      label: "Review",
+                      hint: "Write down your review here",
+                      context: context,
+                      controller: state.reviewController,
+                      numberOfLines: 10,
+                      validator: state.reviewValidator,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

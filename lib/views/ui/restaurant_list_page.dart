@@ -1,18 +1,8 @@
-// import 'package:flutter/material.dart';
-// import 'package:resty/data/models/restaurant_list.dart';
-// import 'package:resty/themes/colors.dart';
-// import 'package:resty/views/widgets/list_view_item.dart';
-// import 'package:resty/views/widgets/persistent_header.dart';
-// import 'package:resty/views/widgets/resty_app_bar.dart';
-// import 'package:resty/views/widgets/select_button.dart';
-// import 'package:resty/views/widgets/resty_search_bar.dart';
-// import 'package:resty/views/widgets/small_button.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/provider/restaurants_provider.dart';
-import 'package:resty/themes/colors.dart';
+import 'package:resty/views/widgets/display_error.dart';
 import 'package:resty/views/widgets/filter_bar.dart';
 import 'package:resty/views/widgets/list_view_item.dart';
 import 'package:resty/views/widgets/resty_app_bar.dart';
@@ -38,7 +28,7 @@ class RestaurantListPage extends StatelessWidget {
         },
       );
     } else if (state.state == ResultState.noData) {
-      return _displayError(
+      return DisplayError(
         icon: Icons.search_off,
         text: RichText(
           text: TextSpan(
@@ -58,7 +48,7 @@ class RestaurantListPage extends StatelessWidget {
         ),
       );
     } else if (state.state == ResultState.error) {
-      return _displayError(
+      return DisplayError(
         icon: Icons.error_outline,
         text: Text(
           state.message,
@@ -100,24 +90,6 @@ class RestaurantListPage extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Column _displayError({
-    required IconData icon,
-    required Widget text,
-  }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 100,
-          color: primaryColor[300],
-        ),
-        const SizedBox(height: 24),
-        text,
-      ],
     );
   }
 }

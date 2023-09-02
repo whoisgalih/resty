@@ -6,6 +6,8 @@ import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
 import 'package:resty/provider/restaurant_provider.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/ui/add_review_page.dart';
+import 'package:resty/views/ui/restaurant_list_page.dart';
+import 'package:resty/views/widgets/display_error.dart';
 
 class RestaurantPage extends StatelessWidget {
   static String routeName = '/restaurant_page';
@@ -186,10 +188,9 @@ class RestaurantPage extends StatelessWidget {
       );
     }
 
-    return _displayError(
+    return DisplayError(
       icon: Icons.error_outline,
       text: Text(
-        // "Oops, something went wrong\nFailed to load restaurants",
         state.message,
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleMedium,
@@ -208,12 +209,14 @@ class RestaurantPage extends StatelessWidget {
             arguments: Provider.of<RestaurantProvider>(context, listen: false)
                 .restaurant
                 .id,
-          ).then((result) {
-            if (result is List<CustomerReview>) {
-              Provider.of<RestaurantProvider>(context, listen: false)
-                  .setReviews(result);
-            }
-          });
+          ).then(
+            (result) {
+              if (result is List<CustomerReview>) {
+                Provider.of<RestaurantProvider>(context, listen: false)
+                    .setReviews(result);
+              }
+            },
+          );
         },
         child: const Icon(Icons.chat_rounded),
       ),
@@ -293,24 +296,6 @@ class RestaurantPage extends StatelessWidget {
                 .titleLarge!
                 .copyWith(fontWeight: FontWeight.bold),
       ),
-    );
-  }
-
-  Column _displayError({
-    required IconData icon,
-    required Widget text,
-  }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 100,
-          color: primaryColor[300],
-        ),
-        const SizedBox(height: 24),
-        text,
-      ],
     );
   }
 }
