@@ -21,7 +21,13 @@ class RestaurantProvider extends ChangeNotifier {
 
   late ScrollController scrollController;
   bool isExpanded = true;
-  bool isTextExpanded = false;
+  bool _isTextExpanded = false;
+
+  bool get isTextExpanded => _isTextExpanded;
+  set isTextExpanded(bool value) {
+    _isTextExpanded = value;
+    notifyListeners();
+  }
 
   void _isExpandedFunction() {
     isExpanded = scrollController.hasClients &&

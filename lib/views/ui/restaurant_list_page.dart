@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/provider/restaurants_provider.dart';
+import 'package:resty/views/ui/restaurant_page.dart';
 import 'package:resty/views/widgets/display_error.dart';
 import 'package:resty/views/widgets/filter_bar.dart';
 import 'package:resty/views/widgets/list_view_item.dart';
@@ -24,7 +25,16 @@ class RestaurantListPage extends StatelessWidget {
         itemCount: state.restaurants.length,
         itemBuilder: (context, index) {
           final restaurant = state.restaurants[index];
-          return ListViewItem(restaurant: restaurant);
+          return ListViewItem(
+            restaurant: restaurant,
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                RestaurantPage.routeName,
+                arguments: restaurant,
+              );
+            },
+          );
         },
       );
     } else if (state.state == ResultState.noData) {
