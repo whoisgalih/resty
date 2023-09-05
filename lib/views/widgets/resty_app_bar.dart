@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resty/views/ui/favorites_page.dart';
+import 'package:resty/views/ui/settings_page.dart';
 
 class RestyAppBar extends StatelessWidget {
   const RestyAppBar({
@@ -23,7 +24,9 @@ class RestyAppBar extends StatelessWidget {
         ),
         // settings
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, SettingsPage.routeName);
+          },
           icon: const Icon(Icons.settings_outlined),
         ),
         const SizedBox(width: 16),
