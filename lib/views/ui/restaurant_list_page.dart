@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resty/commons/navigation_helper.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/provider/restaurants_provider.dart';
 import 'package:resty/utils/notification_helper.dart';
@@ -49,10 +50,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
           return ListViewItem(
             restaurant: restaurant,
             onTap: () {
-              Navigator.pushNamed(
-                context,
+              Navigation.intentWithData(
                 RestaurantPage.routeName,
-                arguments: restaurant,
+                restaurant,
               );
             },
           );

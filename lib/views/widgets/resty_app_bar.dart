@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resty/commons/navigation_helper.dart';
 import 'package:resty/views/ui/favorites_page.dart';
 import 'package:resty/views/ui/settings_page.dart';
 
@@ -18,14 +19,14 @@ class RestyAppBar extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, FavoritesPage.routeName);
+            Navigation.intentWithData(FavoritesPage.routeName, 0);
           },
           icon: const Icon(Icons.favorite_outline),
         ),
         // settings
         IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, SettingsPage.routeName);
+            Navigation.intentWithData(SettingsPage.routeName, 0);
           },
           icon: const Icon(Icons.settings_outlined),
         ),

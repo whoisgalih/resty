@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resty/commons/navigation_helper.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/provider/database_provider.dart';
 import 'package:resty/views/ui/restaurant_page.dart';
@@ -25,10 +26,9 @@ class FavoritesPage extends StatelessWidget {
                 return ListViewItem(
                   restaurant: restaurant,
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
+                    Navigation.intentWithData(
                       RestaurantPage.routeName,
-                      arguments: restaurant,
+                      restaurant,
                     );
                   },
                 );

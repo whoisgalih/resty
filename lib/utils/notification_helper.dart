@@ -36,9 +36,6 @@ class NotificationHelper {
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {
         final payload = details.payload;
-        if (payload != null) {
-          print('notification payload: $payload');
-        }
         selectNotificationSubject.add(payload ?? 'empty payload');
       },
     );
