@@ -27,7 +27,7 @@ void main() {
           home: ChangeNotifierProvider<RestaurantsProvider>(
             create: (context) => RestaurantsProvider(
                 apiService: ApiService(client: mockHttpClient)),
-            child: RestaurantListPage(),
+            child: const RestaurantListPage(),
           ),
         ),
       );
@@ -54,7 +54,7 @@ void main() {
           home: ChangeNotifierProvider<RestaurantsProvider>(
             create: (context) => RestaurantsProvider(
                 apiService: ApiService(client: mockHttpClient)),
-            child: RestaurantListPage(),
+            child: const RestaurantListPage(),
           ),
         ),
       );
@@ -126,7 +126,7 @@ void main() {
               ),
             ),
           ],
-          child: MaterialApp(
+          child: const MaterialApp(
             home: RestaurantListPage(),
           ),
         ),

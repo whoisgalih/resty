@@ -10,27 +10,7 @@ import 'package:resty/views/widgets/platform_widget.dart';
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
 
-  static const String settingsTitle = 'Settings';
-
   const SettingsPage({Key? key}) : super(key: key);
-
-  Widget _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(settingsTitle),
-      ),
-      body: _buildList(context),
-    );
-  }
-
-  Widget _buildIos(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text(settingsTitle),
-      ),
-      child: _buildList(context),
-    );
-  }
 
   Widget _buildList(BuildContext context) {
     return ListView(
@@ -60,9 +40,11 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIos,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Settings"),
+      ),
+      body: _buildList(context),
     );
   }
 }

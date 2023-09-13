@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resty/commons/navigation_helper.dart';
+import 'package:resty/themes/colors.dart';
 
 customDialog(BuildContext context) {
   if (Platform.isIOS) {
@@ -15,7 +16,7 @@ customDialog(BuildContext context) {
           content: const Text('This feature will be coming soon!'),
           actions: [
             CupertinoDialogAction(
-              child: const Text('Ok'),
+              child: Text('Ok', style: TextStyle(color: accentColor[500])),
               onPressed: () {
                 Navigation.back();
               },
