@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,7 @@ Future<void> main() async {
   runApp(const MainApp());
 }
 
-final ApiService apiService = ApiService();
+final ApiService apiService = ApiService(client: http.Client());
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

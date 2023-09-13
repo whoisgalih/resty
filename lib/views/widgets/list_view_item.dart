@@ -33,6 +33,17 @@ class ListViewItem extends StatelessWidget {
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 100,
+                        width: 100,
+                        color: primaryColor[300],
+                        child: const Icon(
+                          Icons.image_not_supported,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
