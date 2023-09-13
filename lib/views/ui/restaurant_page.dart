@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/data/api/api_service.dart';
 import 'package:resty/data/models/customer_review/cutomer_review_model.dart';
+import 'package:resty/provider/database_provider.dart';
 import 'package:resty/provider/restaurant_provider.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/ui/add_review_page.dart';
@@ -48,6 +49,44 @@ class RestaurantPage extends StatelessWidget {
             headerSliverBuilder: (context, isScrolled) {
               return [
                 SliverAppBar(
+                  actions: [
+                    Consumer<DatabaseProvider>(
+                      builder:
+                          (BuildContext context, DatabaseProvider provider, _) {
+                        return FutureBuilder(
+                          future: provider.isFavorite(state.restaurant.id),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<bool> snapshot) {
+                            bool isFavorite = snapshot.data ?? false;
+                            if (isFavorite) {
+                              return IconButton(
+                                onPressed: () {
+                                  provider.removeFavorite(state.restaurant.id);
+                                },
+                                icon: Icon(
+                                  Icons.favorite,
+                                  color: accentColor[500],
+                                ),
+                              );
+                            } else {
+                              return IconButton(
+                                onPressed: () {
+                                  provider.addFavorite(state.restaurant);
+                                },
+                                icon: Icon(
+                                  Icons.favorite_border,
+                                  color: state.isExpanded
+                                      ? Colors.white
+                                      : Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              );
+                            }
+                          },
+                        );
+                      },
+                    ),
+                    // const SizedBox(width: 16),
+                  ],
                   expandedHeight: 300,
                   pinned: true,
                   foregroundColor: state.isExpanded
@@ -74,6 +113,16 @@ class RestaurantPage extends StatelessWidget {
                           child: Image.network(
                             "${ApiService.baseUrl}/images/large/${state.restaurant.pictureId}",
                             fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
+                              height: 300,
+                              width: double.infinity,
+                              color: primaryColor[300],
+                              child: const Icon(
+                                Icons.image_not_supported,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                         const DecoratedBox(
