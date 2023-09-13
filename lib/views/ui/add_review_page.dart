@@ -108,7 +108,7 @@ class AddReviewPage extends StatelessWidget {
           minLines: numberOfLines,
           maxLines: numberOfLines,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 12,
             ),

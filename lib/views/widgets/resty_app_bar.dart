@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:resty/commons/navigation_helper.dart';
+import 'package:resty/views/ui/favorites_page.dart';
+import 'package:resty/views/ui/settings_page.dart';
 
 class RestyAppBar extends StatelessWidget {
   const RestyAppBar({
@@ -13,6 +16,22 @@ class RestyAppBar extends StatelessWidget {
       elevation: 0,
       collapsedHeight: 70,
       expandedHeight: 200,
+      actions: [
+        IconButton(
+          onPressed: () {
+            Navigation.intentWithData(FavoritesPage.routeName, 0);
+          },
+          icon: const Icon(Icons.favorite_outline),
+        ),
+        // settings
+        IconButton(
+          onPressed: () {
+            Navigation.intentWithData(SettingsPage.routeName, 0);
+          },
+          icon: const Icon(Icons.settings_outlined),
+        ),
+        const SizedBox(width: 16),
+      ],
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.all(20),
         centerTitle: false,

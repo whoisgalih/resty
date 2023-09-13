@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resty/commons/navigation_helper.dart';
 import 'package:resty/commons/result_state.dart';
 import 'package:resty/provider/restaurants_provider.dart';
+import 'package:resty/utils/notification_helper.dart';
+import 'package:resty/views/ui/restaurant_page.dart';
 import 'package:resty/views/widgets/display_error.dart';
 import 'package:resty/views/widgets/filter_bar.dart';
 import 'package:resty/views/widgets/list_view_item.dart';
 import 'package:resty/views/widgets/resty_app_bar.dart';
 import 'package:resty/views/widgets/resty_search_bar.dart';
 
-class RestaurantListPage extends StatelessWidget {
+class RestaurantListPage extends StatefulWidget {
   static const routeName = '/restaurant_list';
 
   const RestaurantListPage({super.key});
+
+  @override
+  State<RestaurantListPage> createState() => _RestaurantListPageState();
+}
+
+class _RestaurantListPageState extends State<RestaurantListPage> {
+  final NotificationHelper _notificationHelper = NotificationHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationHelper
+        .configureSelectNotificationSubject(RestaurantPage.routeName);
+  }
+
+  @override
+  void dispose() {
+    selectNotificationSubject.close();
+    super.dispose();
+  }
 
   Widget _buildList(BuildContext context, RestaurantsProvider state) {
     if (state.state == ResultState.loading) {
@@ -24,7 +47,15 @@ class RestaurantListPage extends StatelessWidget {
         itemCount: state.restaurants.length,
         itemBuilder: (context, index) {
           final restaurant = state.restaurants[index];
-          return ListViewItem(restaurant: restaurant);
+          return ListViewItem(
+            restaurant: restaurant,
+            onTap: () {
+              Navigation.intentWithData(
+                RestaurantPage.routeName,
+                restaurant,
+              );
+            },
+          );
         },
       );
     } else if (state.state == ResultState.noData) {

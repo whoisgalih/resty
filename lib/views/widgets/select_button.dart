@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resty/commons/navigation_helper.dart';
 import 'package:resty/themes/colors.dart';
 import 'package:resty/views/widgets/small_button.dart';
 
@@ -44,7 +45,7 @@ class SelectButton extends StatelessWidget {
                   ),
                   onTap: () {
                     onSelected(options[index]);
-                    Navigator.pop(context);
+                    Navigation.back();
                   },
                 );
               },

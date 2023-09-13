@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:resty/data/api/api_service.dart';
 import 'package:resty/data/models/restaurants/restaurant_model.dart';
+import 'package:resty/provider/database_provider.dart';
 import 'package:resty/themes/colors.dart';
-import 'package:resty/views/ui/restaurant_page.dart';
 
 class ListViewItem extends StatelessWidget {
   const ListViewItem({
     super.key,
     required this.restaurant,
+    required this.onTap,
   });
 
   final Restaurant restaurant;
+  final GestureTapCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          RestaurantPage.routeName,
-          arguments: restaurant,
-        );
-      },
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         child: IntrinsicHeight(
@@ -36,6 +33,17 @@ class ListViewItem extends StatelessWidget {
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 100,
+                        width: 100,
+                        color: primaryColor[300],
+                        child: const Icon(
+                          Icons.image_not_supported,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -97,6 +105,38 @@ class ListViewItem extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              Consumer<DatabaseProvider>(
+                builder: (BuildContext context, DatabaseProvider provider, _) {
+                  return FutureBuilder(
+                    future: provider.isFavorite(restaurant.id),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                      bool isFavorite = snapshot.data ?? false;
+                      if (isFavorite) {
+                        return IconButton(
+                          onPressed: () {
+                            provider.removeFavorite(restaurant.id);
+                          },
+                          icon: Icon(
+                            Icons.favorite,
+                            color: accentColor[500],
+                          ),
+                        );
+                      } else {
+                        return IconButton(
+                          onPressed: () {
+                            provider.addFavorite(restaurant);
+                          },
+                          icon: Icon(
+                            Icons.favorite_border,
+                            color: primaryColor[300],
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
               ),
             ],
           ),
