@@ -1,11 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resty/provider/scheduling_provider.dart';
 import 'package:resty/views/widgets/custom_dialog.dart';
-import 'package:resty/views/widgets/platform_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
